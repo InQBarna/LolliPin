@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.github.omadahealth.lollipin.lib.PinActivity;
 import com.github.omadahealth.lollipin.lib.R;
 import com.github.omadahealth.lollipin.lib.enums.KeyboardButtonEnum;
@@ -21,8 +23,6 @@ import com.github.omadahealth.lollipin.lib.views.PinCodeRoundView;
 
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * Created by stoyan and olivier on 1/13/15.
@@ -147,22 +147,22 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
             try {
                 if (mFingerprintManager != null && mFingerprintUiHelper != null && mFingerprintUiHelper.isFingerprintAuthAvailable()
                         && mLockManager.getAppLock().isFingerprintAuthEnabled()) {
-                    mFingerprintImageView.setVisibility(View.VISIBLE);
-                    mFingerprintTextView.setVisibility(View.VISIBLE);
-                    mFingerprintUiHelper.startListening();
+                    toggleFingerPrintUIVisibility(mFingerprintUiHelper.startListening());
                 } else {
-                    mFingerprintImageView.setVisibility(View.GONE);
-                    mFingerprintTextView.setVisibility(View.GONE);
+                    toggleFingerPrintUIVisibility(false);
                 }
             } catch (SecurityException e) {
                 Log.e(TAG, e.toString());
-                mFingerprintImageView.setVisibility(View.GONE);
-                mFingerprintTextView.setVisibility(View.GONE);
+                toggleFingerPrintUIVisibility(false);
             }
         } else {
-            mFingerprintImageView.setVisibility(View.GONE);
-            mFingerprintTextView.setVisibility(View.GONE);
+            toggleFingerPrintUIVisibility(false);
         }
+    }
+
+    private void toggleFingerPrintUIVisibility(boolean show) {
+        mFingerprintImageView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mFingerprintTextView.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -219,7 +219,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         return getString(R.string.pin_code_forgot_text);
     }
 
-    private void setForgotTextVisibility(){
+    private void setForgotTextVisibility() {
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
     }
 

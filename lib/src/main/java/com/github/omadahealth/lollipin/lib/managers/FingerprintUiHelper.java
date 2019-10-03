@@ -29,17 +29,10 @@ import android.widget.TextView;
 
 import com.github.omadahealth.lollipin.lib.R;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 /**
@@ -133,17 +126,21 @@ public class FingerprintUiHelper extends FingerprintManager.AuthenticationCallba
      * Starts listening to {@link FingerprintManager}
      *
      * @throws SecurityException If the hardware is not available, or the permission are not set
+     * @return
      */
-    public void startListening() throws SecurityException {
+    public boolean startListening() throws SecurityException {
         if (initCipher()) {
             FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(mCipher);
             if (!isFingerprintAuthAvailable()) {
-                return;
+                return false;
             }
             mCancellationSignal = new CancellationSignal();
             mSelfCancelled = false;
             mFingerprintManager.authenticate(cryptoObject, mCancellationSignal, 0 /* flags */, this, null);
             mIcon.setImageResource(R.drawable.ic_fp_40px);
+            return true;
+        } else {
+            return false;
         }
     }
 
