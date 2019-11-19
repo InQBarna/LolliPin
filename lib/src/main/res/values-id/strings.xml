@@ -1,5 +1,7 @@
 <resources>
 
+
+    <string name="pin_code_skip">Skip</string> <!--missing translation-->
     <string name="pin_code_forgot_text">Lupa?</string>
     <string name="pin_code_step_disable">Matikan %d-digit Kode pin</string>
     <string name="pin_code_step_create">Buat %d-digit Kode pin</string>

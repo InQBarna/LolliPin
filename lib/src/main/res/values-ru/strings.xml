@@ -1,4 +1,5 @@
 <resources>
+    <string name="pin_code_skip">Skip</string> <!--missing translation-->
     <string name="pin_code_forgot_text">Забыли пароль?</string>
     <string name="pin_code_step_disable">Отключите %d-значный пин-код</string>
     <string name="pin_code_step_create">Создайте %d-значный пин-код</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="pin_code_skip">Skip</string> <!--missing translation-->
 	<string name="pin_code_forgot_text">잊어버렸나요?</string>
 	<string name="pin_code_step_disable">%d-자리 핀코드 해제</string>
 	<string name="pin_code_step_create">%d-자리 핀코드 생성</string>

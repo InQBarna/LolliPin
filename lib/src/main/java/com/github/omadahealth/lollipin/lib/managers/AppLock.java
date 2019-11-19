@@ -112,6 +112,9 @@ public abstract class AppLock {
      */
     public abstract void setPinChallengeCancelled(boolean cancelled);
 
+    public abstract void setShowSkip(boolean showSkip);
+
+    public abstract boolean isShowSkip(int type);
 
     /**
      * Get the only background timeout option used to determine if the time

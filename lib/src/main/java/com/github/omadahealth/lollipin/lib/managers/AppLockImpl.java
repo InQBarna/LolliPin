@@ -44,6 +44,10 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
      */
     private static final String LOGO_ID_PREFERENCE_KEY = "LOGO_ID_PREFERENCE_KEY";
     /**
+     * The {@link android.content.SharedPreferences} key used to show or not the skip button
+     */
+    private static final String SHOW_SKIP_PREFERENCE_KEY = "SHOW_SKIP_PREFERENCE_KEY";
+    /**
      * The {@link android.content.SharedPreferences} key used to store the forgot option
      */
     private static final String SHOW_FORGOT_PREFERENCE_KEY = "SHOW_FORGOT_PREFERENCE_KEY";
@@ -188,6 +192,19 @@ public class AppLockImpl<T extends AppLockActivity> extends AppLock implements L
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putBoolean(PIN_CHALLENGE_CANCELLED_PREFERENCE_KEY, backedOut);
         editor.apply();
+    }
+
+    @Override
+    public void setShowSkip(boolean showSkip) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(SHOW_SKIP_PREFERENCE_KEY, showSkip);
+        editor.apply();
+    }
+
+    @Override
+    public boolean isShowSkip(int appLockType) {
+        return mSharedPreferences.getBoolean(SHOW_SKIP_PREFERENCE_KEY, false)
+                && appLockType == UNLOCK_PIN;
     }
 
     @Override

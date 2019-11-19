@@ -39,6 +39,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     protected TextView mStepTextView;
     protected TextView mForgotTextView;
     protected PinCodeRoundView mPinCodeRoundView;
+    protected TextView tvSkip;
     protected KeyboardView mKeyboardView;
     protected ImageView mFingerprintImageView;
     protected TextView mFingerprintTextView;
@@ -120,6 +121,14 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         mForgotTextView = (TextView) this.findViewById(R.id.pin_code_forgot_textview);
         mForgotTextView.setOnClickListener(this);
         mKeyboardView = (KeyboardView) this.findViewById(R.id.pin_code_keyboard_view);
+        tvSkip = this.findViewById(R.id.pin_code_skip);
+        tvSkip.setText(R.string.pin_code_skip);
+        tvSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSkip();
+            }
+        });
         mKeyboardView.setKeyboardButtonClickedListener(this);
 
         int logoId = mLockManager.getAppLock().getLogoId();
@@ -130,7 +139,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
         }
         mForgotTextView.setText(getForgotText());
         setForgotTextVisibility();
-
+        setShowSkip();
         setStepText();
     }
 
@@ -222,6 +231,11 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
     private void setForgotTextVisibility() {
         mForgotTextView.setVisibility(mLockManager.getAppLock().shouldShowForgot(mType) ? View.VISIBLE : View.GONE);
     }
+
+    private void setShowSkip() {
+        tvSkip.setVisibility(mLockManager.getAppLock().isShowSkip(mType) ? View.VISIBLE : View.GONE);
+    }
+
 
     /**
      * Overrides to allow a slide_down animation when finishing
@@ -385,6 +399,7 @@ public abstract class AppLockActivity extends PinActivity implements KeyboardBut
      */
     public abstract void showForgotDialog();
 
+    public abstract void onSkip();
     /**
      * Run a shake animation when the password is not valid.
      */
